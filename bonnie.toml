@@ -1,0 +1,33 @@
+version="0.3.2"
+
+[scripts]
+site.cmd = "concurrently \"bonnie site export\" \"bonnie site build-tailwind\""
+site.desc = "builds and serves the site for local development (requires `concurrently`)"
+site.subcommands.export.cmd = [
+    "perseus export -sw --cargo-engine-path cargo-clif"
+]
+site.subcommands.export.desc = "exports and serves the site, watching for changes"
+site.subcommands.check.cmd = [
+    "perseus check -w --cargo-engine-path cargo-clif"
+]
+site.subcommands.check.desc = "checks the code of the website"
+site.subcommands.build-tailwind.cmd = [
+    "tailwindcss -c ./tailwind.config.js -o ./static/tailwind.css -w"
+]
+site.subcommands.build-tailwind.desc = "builds a tailwind stylesheet for development, watching for changes"
+site.subcommands.build-tailwind.subcommands.prod.cmd = [
+    "NODE_ENV=production tailwindcss -c ./tailwind.config.js -o ./static/tailwind.css --minify"
+]
+site.subcommands.build-tailwind.subcommands.prod.desc = "builds a tailwind stylesheet for production (minifying)"
+site.subcommands.deploy.cmd = [
+    "bonnie site build-tailwind prod",
+    "perseus deploy -e"
+]
+site.subcommands.deploy.desc = "builds the website for production and finalizes it at `website/pkg`"
+site.subcommands.deploy-prod.cmd = [
+    "bonnie site build-tailwind prod",
+    # TODO Update URLs
+    "PERSEUS_BASE_PATH=https://thequantorium.github.io perseus deploy -e",
+    "PERSEUS_BASE_PATH=https://thequantorium.github.io perseus export-error-page --code 404 --output pkg/404.html",
+]
+site.subcommands.deploy-prod.desc = "builds the website for production on GitHub Pages and finalizes it at `website/pkg`"
