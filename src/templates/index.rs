@@ -1,13 +1,16 @@
 use perseus::prelude::*;
-use serde::{Serialize, Deserialize};
-use sycamore::prelude::*;
+use serde::{Deserialize, Serialize};
 use std::io;
+use sycamore::prelude::*;
 
-use crate::{components::{Layout, Typewriter, ProtocolCard}, svg::BOOK};
+use crate::{
+    components::{Layout, ProtocolCard, Typewriter},
+    svg::BOOK,
+};
 
 #[derive(Serialize, Deserialize, UnreactiveState, Clone)]
 struct IntroState {
-    html_intro: String
+    html_intro: String,
 }
 
 fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View<G> {
@@ -112,8 +115,8 @@ fn head(cx: Scope) -> View<SsrNode> {
 
 #[engine_only_fn]
 async fn get_build_state(_: StateGeneratorInfo<()>) -> Result<IntroState, BlamedError<io::Error>> {
+    use pulldown_cmark::{html, Options, Parser};
     use tokio::fs;
-    use pulldown_cmark::{Options, Parser, html};
 
     let md_content = fs::read_to_string("intro.md").await?;
 
@@ -124,9 +127,7 @@ async fn get_build_state(_: StateGeneratorInfo<()>) -> Result<IntroState, Blamed
     let mut html_intro = String::new();
     html::push_html(&mut html_intro, parser);
 
-    Ok(IntroState {
-        html_intro
-    })
+    Ok(IntroState { html_intro })
 }
 
 pub fn get_template<G: Html>() -> Template<G> {

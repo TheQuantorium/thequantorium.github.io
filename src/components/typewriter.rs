@@ -1,6 +1,5 @@
 //! Typewriter effects for the landing page.
 
-
 use sycamore::prelude::*;
 
 /// A typewriter effect, which will first display the first element in the given
@@ -12,15 +11,22 @@ pub fn Typewriter<G: Html>(
     cx: Scope,
     TypewriterProps {
         strings,
-        #[cfg(client)] phrase_delay,
-        #[cfg(client)] char_delay,
-        #[cfg(client)] cyclical,
-        #[cfg(client)] is_done,
-        #[cfg(engine)] ..
-    }: TypewriterProps
+        #[cfg(client)]
+        phrase_delay,
+        #[cfg(client)]
+        char_delay,
+        #[cfg(client)]
+        cyclical,
+        #[cfg(client)]
+        is_done,
+        ..
+    }: TypewriterProps,
 ) -> View<G> {
     // This would be caught at build-time
-    assert!(strings.len() >= 2, "must provide at least two strings to cycle through");
+    assert!(
+        strings.len() >= 2,
+        "must provide at least two strings to cycle through"
+    );
 
     let text = create_rc_signal(strings[0].to_string());
     let text_ref = create_ref(cx, text.clone());
@@ -39,7 +45,9 @@ pub fn Typewriter<G: Html>(
         // We're already displaying the first string, so advance the iterator
         let _ = strings.next();
 
-        let typewriter_status = create_rc_signal(TypewriterStatus::Backward(strings.next().unwrap().chars().collect::<Vec<char>>()));
+        let typewriter_status = create_rc_signal(TypewriterStatus::Backward(
+            strings.next().unwrap().chars().collect::<Vec<char>>(),
+        ));
         let mut interval_handle: Option<i32> = None;
 
         spawn_local_scoped(cx, async move {
@@ -52,57 +60,62 @@ pub fn Typewriter<G: Html>(
             // We immediately 'forget' the interval according to RAII, and then
             // we acquire a handle to it that can be used to cancel it as part
             // of scope cleanup.
-            interval_handle = Some(Interval::new(char_delay, move || {
-                let mut curr_text = (*text.get()).to_string();
-                let status = typewriter_status.get();
+            interval_handle = Some(
+                Interval::new(char_delay, move || {
+                    let mut curr_text = (*text.get()).to_string();
+                    let status = typewriter_status.get();
 
-                match &*status {
-                    TypewriterStatus::Forward(chars) => {
-                        let mut chars = chars.to_vec();
-                        let first_char = chars.remove(0);
-                        curr_text.push(first_char);
-                        // Remove this char from the current list
-                        if !chars.is_empty() {
-                            typewriter_status.set(TypewriterStatus::Forward(chars));
-                        } else {
-                            // We've reached the end of this word, start a delay (which
-                            // should be divided by the length of this interval's timer to
-                            // get the number of passes we should be waiting for).
-                            typewriter_status.set(TypewriterStatus::Waiting(phrase_delay / char_delay));
-                        }
-                        text.set(curr_text);
-                    },
-                    TypewriterStatus::Backward(next_string_chars) => {
-                        curr_text.pop();
-                        // If we've finished backspacing the word, start the next one
-                        if curr_text.is_empty() {
-                            typewriter_status.set(TypewriterStatus::Forward(next_string_chars.to_vec()));
-                        }
-
-                        // If this is empty, CSS will make sure it keeps its height
-                        text.set(curr_text);
-                    },
-                    TypewriterStatus::Waiting(iters_left) => {
-                        // We're waiting for a certain number of iterations, so just decrement
-                        // it before we go vto backspacing
-                        let new_iters_left = iters_left - 1;
-                        if new_iters_left == 0 {
-                            // Cyclic iterators never return `None` from `.next()`
-                            if let Some(next_string) = strings.next() {
-                                let next_chars = next_string.chars().collect::<Vec<char>>();
-                                typewriter_status.set(TypewriterStatus::Backward(next_chars));
+                    match &*status {
+                        TypewriterStatus::Forward(chars) => {
+                            let mut chars = chars.to_vec();
+                            let first_char = chars.remove(0);
+                            curr_text.push(first_char);
+                            // Remove this char from the current list
+                            if !chars.is_empty() {
+                                typewriter_status.set(TypewriterStatus::Forward(chars));
                             } else {
-                                typewriter_status.set(TypewriterStatus::Done);
-                                is_done.set(true);
+                                // We've reached the end of this word, start a delay (which
+                                // should be divided by the length of this interval's timer to
+                                // get the number of passes we should be waiting for).
+                                typewriter_status
+                                    .set(TypewriterStatus::Waiting(phrase_delay / char_delay));
                             }
-                        } else {
-                            typewriter_status.set(TypewriterStatus::Waiting(new_iters_left));
+                            text.set(curr_text);
                         }
-                    },
-                    // If we're done, just keep looping until the user leaves the page
-                    TypewriterStatus::Done => (),
-                }
-            }).forget());
+                        TypewriterStatus::Backward(next_string_chars) => {
+                            curr_text.pop();
+                            // If we've finished backspacing the word, start the next one
+                            if curr_text.is_empty() {
+                                typewriter_status
+                                    .set(TypewriterStatus::Forward(next_string_chars.to_vec()));
+                            }
+
+                            // If this is empty, CSS will make sure it keeps its height
+                            text.set(curr_text);
+                        }
+                        TypewriterStatus::Waiting(iters_left) => {
+                            // We're waiting for a certain number of iterations, so just decrement
+                            // it before we go vto backspacing
+                            let new_iters_left = iters_left - 1;
+                            if new_iters_left == 0 {
+                                // Cyclic iterators never return `None` from `.next()`
+                                if let Some(next_string) = strings.next() {
+                                    let next_chars = next_string.chars().collect::<Vec<char>>();
+                                    typewriter_status.set(TypewriterStatus::Backward(next_chars));
+                                } else {
+                                    typewriter_status.set(TypewriterStatus::Done);
+                                    is_done.set(true);
+                                }
+                            } else {
+                                typewriter_status.set(TypewriterStatus::Waiting(new_iters_left));
+                            }
+                        }
+                        // If we're done, just keep looping until the user leaves the page
+                        TypewriterStatus::Done => (),
+                    }
+                })
+                .forget(),
+            );
 
             // We should never get here unless the interval fails and drops its `tx`
         });
@@ -110,7 +123,9 @@ pub fn Typewriter<G: Html>(
         // Clear the interval by its handle when the scope is destroyed
         on_cleanup(cx, move || {
             if let Some(handle) = interval_handle {
-                web_sys::window().unwrap().clear_interval_with_handle(handle);
+                web_sys::window()
+                    .unwrap()
+                    .clear_interval_with_handle(handle);
             }
         });
     }

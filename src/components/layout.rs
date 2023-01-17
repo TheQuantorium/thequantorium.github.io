@@ -1,5 +1,5 @@
-use sycamore::prelude::*;
 use perseus::prelude::*;
+use sycamore::prelude::*;
 
 static COPYRIGHT_YEARS: &str = "2023";
 

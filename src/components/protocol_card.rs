@@ -8,8 +8,8 @@ pub fn ProtocolCard<G: Html>(
         name,
         description,
         link,
-        emoji
-    }: ProtocolCardProps
+        emoji,
+    }: ProtocolCardProps,
 ) -> View<G> {
     view! { cx,
         div(class = "p-8 shadow-md rounded-lg m-4 sm:max-w-xl") {
