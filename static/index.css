@@ -1,0 +1,4 @@
+.p-keep-height:empty::after {
+    content: "";
+    display: inline-block;
+}

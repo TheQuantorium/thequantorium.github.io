@@ -2,3 +2,6 @@ dist/
 target/
 static/tailwind.css
 node_modules/
+
+# TMP
+intro.md

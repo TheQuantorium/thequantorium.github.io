@@ -1,5 +1,6 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
+const plugin = require("tailwindcss/plugin");
 
 module.exports = {
     content: [
@@ -32,8 +33,24 @@ module.exports = {
                 "dark-mesh-lilac-light": "#7C6396",
                 "dark-mesh-pink": "#9A5984",
             },
+            textShadow: {
+                sm: "0 0 8px var(--tw-shadow-color)",
+                DEFAULT: "0 0 16px var(--tw-shadow-color)",
+                lg: "0 0 24px var(--tw-shadow-color)",
+            }
         },
     },
     variants: {},
-    plugins: [],
+    plugins: [
+        plugin(function ({ matchUtilities, theme }) {
+            matchUtilities(
+                {
+                    'text-shadow': (value) => ({
+                        textShadow: value,
+                    }),
+                },
+                { values: theme('textShadow') }
+            )
+        }),
+    ],
 };

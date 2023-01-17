@@ -1,0 +1,16 @@
+{
+  "the-quantorium": "The Quantorium",
+  "footer.text": "© { $years } The Quantorium",
+  "index.heading.preamble": "Welcome to the future of ",
+  "index.heading.tw.1": "decentralization",
+  "index.heading.tw.2": "blockchain",
+  "index.heading.tw.3": "storage",
+  "index.heading.tw.4": "computation",
+  "index.heading.tw.5": "business",
+  "index.heading.tw.6": "finance",
+  "index.heading.tw.7": "the internet.",
+  "index.summary": "The Quantorium is building the foundations of a new paradigm of decentralization that looks <i>beyond blockchain</i> to achieve spectacular new possibilities.",
+  "index.cta": "Read the manifesto",
+  "intro.heading": "Introduction",
+  "intro.cta": "Read the full manifesto (~15,000 words)"
+}

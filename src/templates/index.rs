@@ -1,10 +1,95 @@
 use perseus::prelude::*;
+use serde::{Serialize, Deserialize};
 use sycamore::prelude::*;
+use std::io;
 
-fn index_page<G: Html>(cx: Scope) -> View<G> {
+use crate::{components::{Layout, Typewriter}, svg::BOOK};
+
+#[derive(Serialize, Deserialize, UnreactiveState, Clone)]
+struct IntroState {
+    html_intro: String
+}
+
+fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View<G> {
+    let typewriter_is_done = create_rc_signal(false);
+    let tid = typewriter_is_done.clone();
+    let tw_span_classes = create_memo(cx, move || {
+        let done = tid.clone().get();
+        if *done {
+            // Once we're done, turn red
+            "text-red-600 text-shadow-lg shadow-red-400/75 transition-colors transition-[text-shadow] duration-300 underline"
+        } else {
+            // Same green as the rest of the heading until we're done
+            "text-emerald-600 text-shadow-lg shadow-emerald-400/75 transition-colors transition-[text-shadow] duration-300"
+        }.to_string()
+    });
+
     view! { cx,
-        div(class = "flex flex-col justify-center items-center h-[95vh]") {
-            h1 { "Welcome to the Quantorium!" }
+        Layout(title = t!(cx, "the-quantorium")) {
+            // Title card
+            div(class = "flex flex-col justify-center items-center py-24 px-48 text-center") {
+                h1(class = "text-6xl font-extrabold") {
+                    span(
+                        class = "text-emerald-600 text-shadow-lg shadow-emerald-400/75"
+                    ) { (t!(cx, "index.heading.preamble")) }
+                    span(
+                        class = tw_span_classes.get()
+                    ) {
+                        Typewriter(
+                            strings = vec! [
+                                t!(cx, "index.heading.tw.1"),
+                                t!(cx, "index.heading.tw.2"),
+                                t!(cx, "index.heading.tw.3"),
+                                t!(cx, "index.heading.tw.4"),
+                                t!(cx, "index.heading.tw.5"),
+                                t!(cx, "index.heading.tw.6"),
+                                t!(cx, "index.heading.tw.7"),
+                            ],
+                            phrase_delay = 1000,
+                            char_delay = 75,
+                            cyclical = false,
+                            is_done = typewriter_is_done
+                        )
+                    }
+                }
+                p(
+                    class = "text-xl font-semibold text-emerald-600 mt-8",
+                    dangerously_set_inner_html = &t!(cx, "index.summary")
+                ) {}
+                // TODO expression of interest form
+            }
+
+
+            // Cards for each protocol
+            div(class = "flex justify-evenly") {
+                div {
+
+                }
+                div {
+
+                }
+                div {
+
+                }
+            }
+
+            // The full introduction
+            div(class = "flex flex-col items-center py-4") {
+                h2(class = "text-4xl text-emerald-600 text-shadow-lg shadow-emerald-400/75 mb-4") { (t!(cx, "intro.heading")) }
+                p(
+                    class = "max-w-prose mx-2",
+                    dangerously_set_inner_html = &html_intro
+                ) {}
+                a(
+                    class = "my-2 p-4 text-white bg-emerald-500 shadow-lg shadow-emerald-500/50 rounded-lg font-semibold text-lg inline-flex items-center transition ease-in-out hover:-translate-y-1 hover:scale-105",
+                    href = "https://github.com/TheQuantorium/manifesto/tree/main/manifesto.pdf",
+                    target = "_blank"
+                ) {
+                    span(class = "fill-white mr-1", dangerously_set_inner_html = BOOK) {}
+                    " "
+                    (t!(cx, "intro.cta"))
+                }
+            }
         }
     }
 }
@@ -12,10 +97,34 @@ fn index_page<G: Html>(cx: Scope) -> View<G> {
 #[engine_only_fn]
 fn head(cx: Scope) -> View<SsrNode> {
     view! { cx,
-        title { "The Quantorium" }
+        title { (t!(cx, "the-quantorium")) }
+        link(rel = "stylesheet", href = ".perseus/static/index.css")
     }
 }
 
+#[engine_only_fn]
+async fn get_build_state(_: StateGeneratorInfo<()>) -> Result<IntroState, BlamedError<io::Error>> {
+    use tokio::fs;
+    use pulldown_cmark::{Options, Parser, html};
+
+    let md_content = fs::read_to_string("intro.md").await?;
+
+    let mut opts = Options::empty();
+    opts.insert(Options::ENABLE_STRIKETHROUGH);
+    opts.insert(Options::ENABLE_TABLES);
+    let parser = Parser::new_ext(&md_content, opts);
+    let mut html_intro = String::new();
+    html::push_html(&mut html_intro, parser);
+
+    Ok(IntroState {
+        html_intro
+    })
+}
+
 pub fn get_template<G: Html>() -> Template<G> {
-    Template::build("index").view(index_page).head(head).build()
+    Template::build("index")
+        .view_with_unreactive_state(index_page)
+        .head(head)
+        .build_state_fn(get_build_state)
+        .build()
 }
