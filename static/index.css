@@ -2,3 +2,12 @@
     content: "";
     display: inline-block;
 }
+
+.emoji-emerald {
+    color: transparent;
+    /* This happens in a shadowed environment, so we mirror those shadows exactly. */
+    text-shadow: 0 0 0 #10b981, 0 0 16px #10b981;
+}
+.emoji-emerald:hover {
+    text-shadow: 0 0 0 #10b981, 0 0 24px #10b981;
+}

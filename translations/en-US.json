@@ -12,5 +12,11 @@
   "index.summary": "The Quantorium is building the foundations of a new paradigm of decentralization that looks <i>beyond blockchain</i> to achieve spectacular new possibilities.",
   "index.cta": "Read the manifesto",
   "intro.heading": "Introduction",
-  "intro.cta": "Read the full manifesto (~15,000 words)"
+  "intro.cta": "Read the full manifesto (~15,000 words)",
+  "index.proto.lykros.name": "Lykros",
+  "index.proto.lykros.desc": "Ensures data security through cryptographic permissions management, enabling many users to securely work on the same data, without compromising safety.",
+  "index.proto.kolaris.name": "Kolaris",
+  "index.proto.kolaris.desc": "Ensures data integrity through an incentivized global network of storage and computation nodes with full redundancy.",
+  "index.proto.mune.name": "Mune",
+  "index.proto.mune.desc": "Provides a decentralized append-only ledger based on patch versioning to replace blockchain with a tiny carbon footprint and no large-scale consensus algorithm needed."
 }

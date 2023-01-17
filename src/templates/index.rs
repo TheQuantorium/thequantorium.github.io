@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 use sycamore::prelude::*;
 use std::io;
 
-use crate::{components::{Layout, Typewriter}, svg::BOOK};
+use crate::{components::{Layout, Typewriter, ProtocolCard}, svg::BOOK};
 
 #[derive(Serialize, Deserialize, UnreactiveState, Clone)]
 struct IntroState {
@@ -27,8 +27,8 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
     view! { cx,
         Layout(title = t!(cx, "the-quantorium")) {
             // Title card
-            div(class = "flex flex-col justify-center items-center py-24 px-48 text-center") {
-                h1(class = "text-6xl font-extrabold") {
+            div(class = "flex flex-col justify-center items-center py-24 px-6 xs:px-12 sm:px-20 md:px-32 lg:px-48 text-center") {
+                h1(class = "text-3xl sm:text-5xl md:text-6xl font-extrabold") {
                     span(
                         class = "text-emerald-600 text-shadow-lg shadow-emerald-400/75"
                     ) { (t!(cx, "index.heading.preamble")) }
@@ -53,39 +53,47 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
                     }
                 }
                 p(
-                    class = "text-xl font-semibold text-emerald-600 mt-8",
+                    class = "text-lg sm:text-xl font-semibold text-emerald-600 mt-8",
                     dangerously_set_inner_html = &t!(cx, "index.summary")
                 ) {}
                 // TODO expression of interest form
             }
 
-
             // Cards for each protocol
-            div(class = "flex justify-evenly") {
-                div {
-
-                }
-                div {
-
-                }
-                div {
-
-                }
+            div(class = "flex flex-col lg:flex-row justify-center items-center lg:items-start mx-4 sm:mx-10 mb-24") {
+                ProtocolCard(
+                    name = t!(cx, "index.proto.lykros.name"),
+                    description = t!(cx, "index.proto.lykros.desc"),
+                    emoji = "&#x1F512;".to_string(),
+                    link = "https://github.com/TheQuantorium/lykros".to_string(),
+                )
+                ProtocolCard(
+                    name = t!(cx, "index.proto.kolaris.name"),
+                    description = t!(cx, "index.proto.kolaris.desc"),
+                    emoji = "&#x1F5A7;".to_string(),
+                    link = "https://github.com/TheQuantorium/lykros".to_string(),
+                )
+                ProtocolCard(
+                    name = t!(cx, "index.proto.mune.name"),
+                    description = t!(cx, "index.proto.mune.desc"),
+                    emoji = "&#x1F4C3;".to_string(),
+                    link = "https://github.com/TheQuantorium/mune".to_string(),
+                )
             }
 
             // The full introduction
-            div(class = "flex flex-col items-center py-4") {
+            div(class = "flex flex-col items-center m-4 sm:mx-8 md:mx-16") {
                 h2(class = "text-4xl text-emerald-600 text-shadow-lg shadow-emerald-400/75 mb-4") { (t!(cx, "intro.heading")) }
                 p(
                     class = "max-w-prose mx-2",
                     dangerously_set_inner_html = &html_intro
                 ) {}
                 a(
-                    class = "my-2 p-4 text-white bg-emerald-500 shadow-lg shadow-emerald-500/50 rounded-lg font-semibold text-lg inline-flex items-center transition ease-in-out hover:-translate-y-1 hover:scale-105",
+                    class = "my-2 p-4 text-white bg-emerald-500 shadow-lg shadow-emerald-500/50 rounded-lg font-semibold md:text-lg inline-flex items-center transition ease-in-out hover:-translate-y-1 hover:scale-105",
                     href = "https://github.com/TheQuantorium/manifesto/tree/main/manifesto.pdf",
                     target = "_blank"
                 ) {
-                    span(class = "fill-white mr-1", dangerously_set_inner_html = BOOK) {}
+                    span(class = "fill-white mr-2", dangerously_set_inner_html = BOOK) {}
                     " "
                     (t!(cx, "intro.cta"))
                 }
