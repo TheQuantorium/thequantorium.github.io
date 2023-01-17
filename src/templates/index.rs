@@ -20,10 +20,10 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
         let done = tid.clone().get();
         if *done {
             // Once we're done, turn red
-            "text-red-600 text-shadow-lg shadow-red-400/75 transition-colors transition-[text-shadow] duration-300 underline"
+            "text-red-600 dark:text-red-500 text-shadow-lg shadow-red-400/75 transition-colors transition-[text-shadow] duration-300 underline"
         } else {
             // Same green as the rest of the heading until we're done
-            "text-emerald-600 text-shadow-lg shadow-emerald-400/75 transition-colors transition-[text-shadow] duration-300"
+            "text-emerald-600 dark:text-emerald-500 text-shadow-lg shadow-emerald-400/75 transition-colors transition-[text-shadow] duration-300"
         }.to_string()
     });
 
@@ -33,7 +33,7 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
             div(class = "flex flex-col justify-center items-center py-24 px-6 xs:px-12 sm:px-20 md:px-32 lg:px-48 text-center") {
                 h1(class = "text-3xl sm:text-5xl md:text-6xl font-extrabold") {
                     span(
-                        class = "text-emerald-600 text-shadow-lg shadow-emerald-400/75"
+                        class = "text-emerald-600 dark:text-emerald-500 text-shadow-lg shadow-emerald-400/75"
                     ) { (t!(cx, "index.heading.preamble")) }
                     span(
                         class = tw_span_classes.get()
@@ -56,7 +56,7 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
                     }
                 }
                 p(
-                    class = "text-lg sm:text-xl font-semibold text-emerald-600 mt-8",
+                    class = "text-lg sm:text-xl font-semibold text-emerald-600 dark:text-emerald-400 mt-8",
                     dangerously_set_inner_html = &t!(cx, "index.summary")
                 ) {}
                 // TODO expression of interest form
@@ -86,9 +86,9 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
 
             // The full introduction
             div(class = "flex flex-col items-center m-4 sm:mx-8 md:mx-16") {
-                h2(class = "text-4xl text-emerald-600 text-shadow-lg shadow-emerald-400/75 mb-4") { (t!(cx, "intro.heading")) }
+                h2(class = "text-4xl text-emerald-600 dark:text-emerald-400 text-shadow-lg shadow-emerald-400/75 mb-4") { (t!(cx, "intro.heading")) }
                 p(
-                    class = "max-w-prose mx-2",
+                    class = "max-w-prose mx-2 text-black dark:text-white md:text-lg",
                     dangerously_set_inner_html = &html_intro
                 ) {}
                 a(

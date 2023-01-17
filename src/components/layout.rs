@@ -12,14 +12,13 @@ pub fn Layout<'a, G: Html>(
 
     view! { cx,
         // These elements are styled with bright colors for demonstration purposes
-        header(class = "text-emerald-500 text-shadow-lg shadow-emerald-400/75 font-extrabold p-4 bg-white text-center underline") {
-            p(class = "text-4xl") { (title.to_string()) }
+        header(class = "text-emerald-500 text-shadow-lg shadow-emerald-400/75 font-extrabold p-4 backdrop-blur-lg text-center underline") {
+            p(class = "text-2xl sm:text-4xl") { (title.to_string()) }
         }
         main(style = "p-4") {
             (children)
         }
-        // TODO Fix rogue diacritic here
-        footer(class = "text-black bg-zinc-100 flex justify-center text-center p-4") {
+        footer(class = "text-black dark:text-white bg-zinc-100 dark:bg-zinc-800 flex justify-center text-center p-4") {
             p(dangerously_set_inner_html = &t!(cx, "footer.text", { "years" = COPYRIGHT_YEARS })) {}
         }
     }

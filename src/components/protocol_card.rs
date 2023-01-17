@@ -18,10 +18,10 @@ pub fn ProtocolCard<G: Html>(
                 class = "text-2xl sm:text-3xl font-bold emoji-emerald transition-[text-shadow]",
                 href = link
             ) {
-                span(dangerously_set_inner_html = &emoji) {}
+                span(class = "mr-2", dangerously_set_inner_html = &emoji) {}
                 span { (name) }
             }
-            p(class = "text-lg sm:text-xl text-zinc-600 font-semibold max-w-prose mt-2") { (description) }
+            p(class = "text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 font-semibold max-w-prose mt-2") { (description) }
         }
     }
 }

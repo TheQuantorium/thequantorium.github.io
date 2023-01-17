@@ -16,11 +16,14 @@ pub fn main<G: Html>() -> PerseusApp<G> {
                     head {
                         link(rel = "stylesheet", href = ".perseus/static/tailwind.css") {}
                         link(rel = "stylesheet", href = ".perseus/static/layout.css") {}
+                        meta(name = "viewport", content = "width=device-width, initial-scale=1") {}
                     }
-                    body {
+                    body(class = "bg-white dark:bg-zinc-900") {
                         PerseusRoot {}
                     }
                 }
             }
         })
+        // TODO
+        .error_views(ErrorViews::unlocalized_development_default())
 }
