@@ -12,8 +12,8 @@ pub fn Layout<'a, G: Html>(
 
     view! { cx,
         // These elements are styled with bright colors for demonstration purposes
-        header(class = "text-black p-4 shadow-lg bg-white") {
-            p(class = "text-lg") { (title.to_string()) }
+        header(class = "text-emerald-500 text-shadow-lg shadow-emerald-400/75 font-extrabold p-4 bg-white text-center underline") {
+            p(class = "text-4xl") { (title.to_string()) }
         }
         main(style = "p-4") {
             (children)
