@@ -1,6 +1,6 @@
 {
   "the-quantorium": "The Quantorium",
-  "footer.text": "© { $years } The Quantorium",
+  "footer.text": "&copy; { $years } The Quantorium",
   "index.heading.preamble": "Welcome to the future of ",
   "index.heading.tw.1": "decentralization",
   "index.heading.tw.2": "blockchain",

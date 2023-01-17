@@ -20,7 +20,7 @@ pub fn Layout<'a, G: Html>(
         }
         // TODO Fix rogue diacritic here
         footer(class = "text-black bg-zinc-100 flex justify-center text-center p-4") {
-            p { (t!(cx, "footer.text", { "years" = COPYRIGHT_YEARS })) }
+            p(dangerously_set_inner_html = &t!(cx, "footer.text", { "years" = COPYRIGHT_YEARS })) {}
         }
     }
 }
