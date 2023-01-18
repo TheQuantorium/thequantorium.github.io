@@ -76,10 +76,10 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
                     link = "https://github.com/TheQuantorium/lykros".to_string(),
                 )
                 ProtocolCard(
-                    name = t!(cx, "index.proto.mune.name"),
-                    description = t!(cx, "index.proto.mune.desc"),
+                    name = t!(cx, "index.proto.mirar.name"),
+                    description = t!(cx, "index.proto.miriar.desc"),
                     emoji = "&#x1F4C3;".to_string(),
-                    link = "https://github.com/TheQuantorium/mune".to_string(),
+                    link = "https://github.com/TheQuantorium/miriar".to_string(),
                 )
             }
 
