@@ -24,6 +24,13 @@ site.subcommands.deploy.cmd = [
     "perseus deploy -e"
 ]
 site.subcommands.deploy.desc = "builds the website for production and finalizes it at `website/pkg`"
+site.subcommands.vercel.cmd = [
+    "bonnie site deploy",
+    "cp -r .vercel pkg/.vercel",
+    "cd pkg",
+    "vercel --prod"
+]
+site.subcommands.vercel.desc = "deploys the app to vercel for testing"
 site.subcommands.deploy-prod.cmd = [
     "bonnie site build-tailwind prod",
     # TODO Update URLs
