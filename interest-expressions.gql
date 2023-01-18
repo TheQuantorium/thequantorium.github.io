@@ -1,0 +1,27 @@
+# This schema is used for a FaunaDB database that stores expressions of interest in the Quantorium
+
+type Expression {
+     email: String! @unique
+     # A randomly-generated token which unsubscribe requests must include to be valid (no point in generating from it, unsubscriptions
+     # could be made by anyone with access to the emails themselves, which makes sense anyway)
+     token: String! @unique
+     interests: Interests!
+}
+
+type Interests @embedded {
+     # The user is interested in running a node themselves
+     runningNode: Boolean!
+     # The user is interested in developing apps on the Quantorium
+     appDev: Boolean!
+     # The user is interested in a possibly cryptocurrency to be built on the Quantorium
+     finance: Boolean!
+     # The user is interested in helping out with developing the parts of the Quantorium
+     dev: Boolean!
+     # The user is interested in providing donations to the project (no support yet, but soon, hence the mailing list!)
+     donation: Boolean!
+}
+
+type Query {
+     allExpressions: [Expression]!
+     expressionByEmail(email: String!): Expression
+}

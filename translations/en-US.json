@@ -18,5 +18,21 @@
   "index.proto.kolaris.name": "Kolaris",
   "index.proto.kolaris.desc": "Ensures data integrity through an incentivized global network of storage and computation nodes with full redundancy.",
   "index.proto.mune.name": "Mune",
-  "index.proto.mune.desc": "Provides a decentralized append-only ledger based on patch versioning to replace blockchain with a tiny carbon footprint and no large-scale consensus algorithm needed."
+  "index.proto.mune.desc": "Provides a decentralized append-only ledger based on patch versioning to replace blockchain with a tiny carbon footprint and no large-scale consensus algorithm needed.",
+  "interest.email": "Your email",
+  "interest.interests-prelude": "I am interested in:",
+  "interest.running_node": "Running a node for the network",
+  "interest.app_dev": "Developing apps for the network",
+  "interest.finance": "A cryptocurrency running on the network",
+  "interest.dev": "Helping out with developing the network itself",
+  "interest.donation": "Donating to help fund the network's development and maintenance",
+  "interest.heading": "Keep up-to-date",
+  "interest.note": "We will never ever send you spam, and you can unsubscribe whenever you want.",
+  "interest.general": "General updates",
+  "interest.submit": "Subscribe",
+  "interest.form.success": "Your expression of interest has been submitted! You should hear from us soon!",
+  "interest.form.error-request": "Form submission failed, please reload the page and try again.",
+  "interest.form.error-http": "Form submission failed with HTTP error code '{ $http_code }'. Please reload the page and try again.",
+  "interest.form.error-parsing": "Response from form submission couldn't be parsed, please reload the page and try again.",
+  "interest.form.error-invalid-email": "Please provide a valid email address that we can send updates to."
 }

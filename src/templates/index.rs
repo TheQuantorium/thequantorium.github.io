@@ -4,7 +4,7 @@ use std::io;
 use sycamore::prelude::*;
 
 use crate::{
-    components::{Layout, ProtocolCard, Typewriter},
+    components::{Layout, ProtocolCard, Typewriter, INTEREST_FORM},
     svg::BOOK,
 };
 
@@ -59,7 +59,6 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
                     class = "text-lg sm:text-xl font-semibold text-emerald-600 dark:text-emerald-400 mt-8",
                     dangerously_set_inner_html = &t!(cx, "index.summary")
                 ) {}
-                // TODO expression of interest form
             }
 
             // Cards for each protocol
@@ -83,6 +82,9 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
                     link = "https://github.com/TheQuantorium/mune".to_string(),
                 )
             }
+
+            // A form for users to express their interest in the Quantorium
+            (INTEREST_FORM.widget(cx, "", ()))
 
             // The full introduction
             div(class = "flex flex-col items-center m-4 sm:mx-8 md:mx-16") {
