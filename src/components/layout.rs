@@ -1,12 +1,14 @@
 use perseus::prelude::*;
 use sycamore::prelude::*;
 
-static COPYRIGHT_YEARS: &str = "2023";
-
 #[component]
 pub fn Layout<'a, G: Html>(
     cx: Scope<'a>,
-    LayoutProps { title, children }: LayoutProps<'a, G>,
+    LayoutProps {
+        title,
+        footer,
+        children,
+    }: LayoutProps<'a, G>,
 ) -> View<G> {
     let children = children.call(cx);
 
@@ -19,7 +21,7 @@ pub fn Layout<'a, G: Html>(
             (children)
         }
         footer(class = "text-black dark:text-white bg-zinc-100 dark:bg-zinc-800 flex justify-center text-center p-4") {
-            p(dangerously_set_inner_html = &t!(cx, "footer.text", { "years" = COPYRIGHT_YEARS })) {}
+            p(dangerously_set_inner_html = &footer) {}
         }
     }
 }
@@ -28,6 +30,8 @@ pub fn Layout<'a, G: Html>(
 pub struct LayoutProps<'a, G: Html> {
     /// The title of the page, which will be displayed in the header.
     pub title: String,
+    /// The text of the footer.
+    pub footer: String,
     /// The content to put inside the layout.
     pub children: Children<'a, G>,
 }

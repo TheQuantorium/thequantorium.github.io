@@ -6,6 +6,7 @@ use sycamore::prelude::*;
 use crate::{
     components::{Layout, ProtocolCard, Typewriter, INTEREST_FORM},
     svg::BOOK,
+    COPYRIGHT_YEARS,
 };
 
 #[derive(Serialize, Deserialize, UnreactiveState, Clone)]
@@ -28,7 +29,7 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
     });
 
     view! { cx,
-        Layout(title = t!(cx, "the-quantorium")) {
+        Layout(title = t!(cx, "the-quantorium"), footer = t!(cx, "footer.text", { "years" = COPYRIGHT_YEARS })) {
             // Title card
             div(class = "flex flex-col justify-center items-center py-24 px-6 xs:px-12 sm:px-20 md:px-32 lg:px-48 text-center") {
                 h1(class = "text-3xl sm:text-5xl md:text-6xl font-extrabold") {

@@ -1,6 +1,9 @@
 mod components;
+mod error_views;
 mod svg;
 mod templates;
+
+static COPYRIGHT_YEARS: &str = "2023";
 
 use perseus::prelude::*;
 use sycamore::prelude::*;
@@ -25,6 +28,5 @@ pub fn main<G: Html>() -> PerseusApp<G> {
                 }
             }
         })
-        // TODO
-        .error_views(ErrorViews::unlocalized_development_default())
+        .error_views(crate::error_views::get_error_views())
 }
