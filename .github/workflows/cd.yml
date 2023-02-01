@@ -1,0 +1,63 @@
+name: Build and Publish Site
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-20.04
+        steps:
+            - uses: actions/checkout@v2
+
+            # Cache Cargo binaries
+            - uses: actions/cache@v3
+              id: cache
+              with:
+                path: |
+                  ~/.cargo/bin/
+                # The cache should be OS-specific
+                key: ${{ runner.os }}-cargo-bins
+            # Only install the binaries if the cache doesn't have them
+            - name: Install Dependencies
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: cargo install bonnie && cargo install perseus-cli --version 0.4.0-beta.17
+
+            # Also cache all the other Cargo files, since plenty of CI runs won't involve different dependencies
+            - uses: actions/cache@v3
+              with:
+                path: |
+                  ~/.cargo/registry/index/
+                  ~/.cargo/registry/cache/
+                  ~/.cargo/git/db/
+                  target/
+                key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.lock') }}
+
+              # And cache NPM dependencies
+            - name: Get npm cache directory
+              id: npm-cache-dir
+              run: |
+                echo "::set-output name=dir::$(npm config get cache)"
+            - uses: actions/cache@v3
+              id: npm-cache
+              with:
+                path: ${{ steps.npm-cache-dir.outputs.dir }}
+                key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                restore-keys: |
+                  ${{ runner.os }}-node-
+            # TODO Only install the NPM dependencies if the cache doesn't have them
+            - name: Install NPM dependencies
+              # if: steps.npm-cache.outputs.cache-hit != 'true'
+              run: npm install
+            - name: Install Tailwind
+              run: npm i -g tailwindcss
+
+            - name: Build site
+              run: bonnie site deploy-prod
+
+            - name: Deploy site to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              if: github.ref == 'refs/heads/main'
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: pkg
