@@ -30,7 +30,7 @@ pub fn get_error_views<G: Html>() -> ErrorViews<G> {
                             div(
                                 class = "p-4 pt-0 mt-4"
                             ) {
-                                p { "This website has panicked! Details are below if you'd like to report this to me (since this really shouldn't happen...)." }
+                                p { "This website has panicked! Details are below if you'd like to report this to us (since this really shouldn't happen...)." }
                                 pre(
                                     class = "bg-amber-500 p-4 mt-4 rounded-lg whitespace-pre-wrap",
                                     // TODO Tailwind doesn't support this?
@@ -58,7 +58,7 @@ pub fn get_error_views<G: Html>() -> ErrorViews<G> {
                         div(
                             class = "p-4 pt-0 mt-4"
                         ) {
-                            p { "This website has encountered an internal error, sorry! Details are below if you'd like to report this to me." }
+                            p { "This website has encountered an internal error, sorry! Details are below if you'd like to report this to us." }
                             pre(
                                 class = "bg-amber-500 p-4 mt-4 rounded-lg whitespace-pre-wrap",
                                 style = "word-break: break-word;"
