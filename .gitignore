@@ -4,6 +4,3 @@ static/tailwind.css
 node_modules/
 pkg/
 .vercel/
-
-# TMP
-intro.md
