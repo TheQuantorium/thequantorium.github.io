@@ -24,6 +24,9 @@ pub fn main<G: Html>() -> PerseusApp<G> {
                     }
                     body(class = "bg-white dark:bg-zinc-900") {
                         PerseusRoot {}
+                        noscript(class = "fixed right-0 bottom-0 m-4 p-4 rounded-lg max-w-md bg-red-200 text-red-900") {
+                            p { "This website will work much better with Javascript enabled! We promise to never track you." }
+                        }
                     }
                 }
             }
