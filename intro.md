@@ -11,7 +11,7 @@ eradicated very quickly indeed. But, with globalisation, with people
 traversing the globe at an ever-increasing rate, and now with
 communications occurring almost instantaneously between people who have
 never met, things have changed. It is said that only 7% of human
-communication is made of of words, the rest is body language,
+communication is made up of words, the rest is body language,
 positioning, intonation, facial expressions. Yet not one of these can be
 conveyed through the media we have in this internet age. How many times
 has a text been misinterpreted, a video call frozen, or a phone call cut
@@ -94,8 +94,8 @@ warming climate, this version of trust is a highly short-term one ---
 although it may well become the only definition if we all end
 up in bunkers, sheltering from volcanic ash and rising seas. While other
 proof mechanisms have been proposed, such as *proof of stake*,
-[questions have been raised] consistently about their efficacy, and the
-extent to which they in fact re-centralise the systems they aim to
+<a class="text-emerald-500 underline" href="https://medium.com/@BobMcElrath/whats-wrong-with-proof-of-stake-77d4f370be15">questions have been raised</a>
+consistently about their efficacy, and the extent to which they in fact re-centralise the systems they aim to
 decentralise.
 
 Again, not once has anyone considered the logic of disruption, somewhat
@@ -108,11 +108,8 @@ decentralisation: look to the 'smart contracts' of Ethereum, and
 notice how their logic must be executed by every single participant in
 the network --- complex logic is impossible.
 
-There is no nice way to overturn the work of over a decade of talented
-individuals working tirelessly to improve all our lives in the
-long-term, but it must be done. Blockchain's time is up, because a
-solution to its problems exists. We have called it *The Quantorium*.
-This is a network comprised of three pieces: *Lykros*, a system that
+Blockchain's time is up, because a solution to its problems exists.
+We have called it *The Quantorium*. This is a network comprised of three pieces: *Lykros*, a system that
 ensures the security of data mathematically, such that no-one can change
 content without permission, while allowing meaningful collaboration at
 the cryptographic level. Lykros is the first system in the world to
@@ -140,12 +137,11 @@ without fear of attack.
 
 Further, Kolaris enables *verifiable computation*, whereby an individual
 can submit a computation and prove its result to others, through
-replication, economic incentives, and cryptography, another world-first
-for decentralised systems. This, when combined with the correct
-system-specific incentives, facilitates the development of
+replication, economic incentives, and cryptography. This, when combined
+with the correct system-specific incentives, can facilitate the development of
 *decentralised oracles*, a hypothetical 'holy grail' technology that
-would allow a decentralised system to communicate reliably with
-centralised ones, with no trusted intermediary.
+would allow a decentralised system to glean information from entirely different
+systems, without any trusted intermediary.
 
 Finally, there is *Miriar*, a true replacement to blockchain that provides a
 decentralised ledger replicated across all nodes, for certain tasks that
@@ -175,7 +171,7 @@ they need, and the company bears no cost at all. This has been proposed
 before, but never with the decentralised technology to meaningfully back
 it in the long-term.
 
-The Quantorium is, thus far, the largest innovation in decentralised
+The Quantorium is, thus far, the largest unified innovation in decentralised
 technology since the publication of the Bitcoin paper that it aims to
 supersede. If this works, there will be thousands of systems working on
 old blockchain technology that will be likely abandoned, and many more
@@ -221,10 +217,9 @@ not in this to get rich, we are in this to improve the world**. If you
 expect to earn millions from running a node, you will be disappointed.
 There is no mining in this system, there is only the provision of
 storage and computation. And, if you provide too much, if your presence
-on the network becomes outsized, your profits will decline: this is the
-power of the Kolaris pricing system. It is not a market-based system, it
-is a mathematically-engineered command economoy system, decentralised
-across every node on the network.
+on the network becomes outsized, you will be removed from the network to
+ensure its ongoing stability and success: no one actor can ever control
+too much of the network, no matter their resources.
 
 Finally, raising awareness. No matter how brilliant the technology, no
 system can ever become useful if people don't know it exists. So
@@ -236,7 +231,7 @@ any time).
 The future of trust is in going forward boldly into a brave new world,
 but it is our duty to ensure that in that world, we build a true
 democracy, a true rule of the people, in which governments, companies,
-and the powerful are not technically, but fundamentally beholden to the
+and the powerful are not technically, but *fundamentally* beholden to the
 will of the people.
 
 So let's create the future of decentralisation, and the future of
