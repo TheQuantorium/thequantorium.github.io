@@ -25,15 +25,15 @@ fn interest_form_widget<G: Html>(cx: Scope, state: &InterestFormStateRx, _: ()) 
     let form_success = create_signal(cx, false);
 
     view! { cx,
-        div(class = "text-left my-12 flex flex-col items-center") {
+        div(class = "text-left my-12 flex flex-col items-center text-black dark:text-white") {
             form(class = "max-w-prose p-8 shadow-md rounded-xl") {
-                h3(class = "text-4xl text-emerald-600 text-shadow shadow-emerald-400/75 mb-2") { (t!(cx, "interest.heading")) }
+                h3(class = "text-4xl text-emerald-600 dark:text-emerald-400 text-shadow shadow-emerald-400/75 mb-2") { (t!(cx, "interest.heading")) }
                 input(
-                    class = "p-2 w-full border-2 border-emerald-600 rounded-md focus:border-emerald-400 focus:ring-0 focus:ring-offset-0",
+                    class = "p-2 w-full border-2 border-emerald-600 rounded-md focus:border-emerald-400 focus:ring-0 focus:ring-offset-0 bg-transparent",
                     placeholder = t!(cx, "interest.email"),
                     bind:value = state.email,
                 ) {}
-                p(class = "italic text-zinc-600 max-w-md") { (t!(cx, "interest.note")) }
+                p(class = "italic text-zinc-600 dark:text-zinc-400 max-w-md") { (t!(cx, "interest.note")) }
                 p { (t!(cx, "interest.interests-prelude")) }
                 input(type = "checkbox", name = "general", disabled = true, checked = true) {}
                 label(class = "ml-2", for = "general") { (t!(cx, "interest.general")) }
