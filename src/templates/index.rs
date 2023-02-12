@@ -94,15 +94,16 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
                     class = "max-w-prose mx-2 text-black dark:text-white md:text-lg",
                     dangerously_set_inner_html = &html_intro
                 ) {}
-                a(
-                    class = "my-2 p-4 text-white bg-emerald-500 shadow-lg shadow-emerald-500/50 rounded-lg font-semibold md:text-lg inline-flex items-center transition ease-in-out hover:-translate-y-1 hover:scale-105",
-                    href = "https://github.com/TheQuantorium/manifesto/tree/main/manifesto.pdf",
-                    target = "_blank"
-                ) {
-                    span(class = "fill-white mr-2", dangerously_set_inner_html = BOOK) {}
-                    " "
-                    (t!(cx, "intro.cta"))
-                }
+                (INTEREST_FORM.widget(cx, "", ()))
+                // a(
+                //     class = "my-2 p-4 text-white bg-emerald-500 shadow-lg shadow-emerald-500/50 rounded-lg font-semibold md:text-lg inline-flex items-center transition ease-in-out hover:-translate-y-1 hover:scale-105",
+                //     href = "https://github.com/TheQuantorium/manifesto/tree/main/manifesto.pdf",
+                //     target = "_blank"
+                // ) {
+                //     span(class = "fill-white mr-2", dangerously_set_inner_html = BOOK) {}
+                //     " "
+                //     (t!(cx, "intro.cta"))
+                // }
             }
         }
     }
