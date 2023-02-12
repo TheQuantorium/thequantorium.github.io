@@ -63,10 +63,10 @@ best way to decentralise our society?
 To understand this, we must return to the fundamental nature of
 decentralisation itself. To decentralise is to remove power from some
 central authority, and grant it entirely to the people. Democracy is not
-decentralisation, not in most countries, because the vote is ratified by
+decentralisation, not in most countries, because the right to vote is controlled by
 central authorities. Because the courts can strike down the popular will
 at their discretion. Because a central government comprised principally
-of money-sucking bureaucrats has overtaken the principle of government
+of money-sucking, unelected bureaucrats has overtaken the principle of government
 for the people, and by the people. The very notion of 'state secrets'
 cannot exemplify this more: a government 'by the people' keeping
 secrets from the people. To have trust in decentralised systems is to
@@ -171,9 +171,7 @@ they need, and the company bears no cost at all. This has been proposed
 before, but never with the decentralised technology to meaningfully back
 it in the long-term.
 
-The Quantorium is, thus far, the largest unified innovation in decentralised
-technology since the publication of the Bitcoin paper that it aims to
-supersede. If this works, there will be thousands of systems working on
+If this works, of course, there will be thousands of systems working on
 old blockchain technology that will be likely abandoned, and many more
 that will hopefully transition to this new network. Whether blockchain and
 the Quantorium will work side-by-side remains to be seen. But together, the three
