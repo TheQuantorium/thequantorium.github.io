@@ -74,7 +74,7 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
                     name = t!(cx, "index.proto.kolaris.name"),
                     description = t!(cx, "index.proto.kolaris.desc"),
                     emoji = "&#x1F5A7;".to_string(),
-                    link = "https://github.com/TheQuantorium/lykros".to_string(),
+                    link = "https://github.com/TheQuantorium/kolaris".to_string(),
                 )
                 ProtocolCard(
                     name = t!(cx, "index.proto.miriar.name"),
