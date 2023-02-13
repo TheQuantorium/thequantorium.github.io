@@ -21,8 +21,8 @@ lazy_static::lazy_static! {
 
 #[auto_scope]
 fn interest_form_widget<G: Html>(cx: Scope, state: &InterestFormStateRx, _: ()) -> View<G> {
-    let form_err = create_signal(cx, String::new());
-    let form_success = create_signal(cx, false);
+    // We always start in the unsubmitted state
+    let form_state = create_signal(cx, FormState::Unsubmitted);
 
     view! { cx,
         div(class = "text-left my-12 flex flex-col items-center text-black dark:text-white") {
@@ -53,7 +53,12 @@ fn interest_form_widget<G: Html>(cx: Scope, state: &InterestFormStateRx, _: ()) 
                 input(bind:checked = state.finance, type = "checkbox", name = "finance") {}
                 label(class = "ml-2", for = "finance") { (t!(cx, "interest.finance")) }
                 br {}
-                p(class = "text-red-400") { (form_err.get()) }
+                // Any errors will be provided through the form state as strings (since they shoudl be human-readable first)
+                p(class = "text-red-400") { (if let FormState::Error(err) = &*form_state.get() {
+                        err.to_string()
+                    } else {
+                        String::new()
+                }) }
                 div(class = "w-full flex flex-col items-center") {
                     button(
                         type = "button",
@@ -64,12 +69,27 @@ fn interest_form_widget<G: Html>(cx: Scope, state: &InterestFormStateRx, _: ()) 
                                 use perseus::state::MakeUnrx;
                                 let form_data = state.clone().make_unrx();
                                 spawn_local_scoped(cx, async move {
-                                    submit_form(cx, form_data, &form_err, &form_success).await;
+                                    submit_form(cx, form_data, &form_state).await;
                                 });
                             }
                         }
-                    ) { (t!(cx, "interest.submit")) }
-                    p(class = "text-emerald-400 mt-5 max-w-sm") { (if *form_success.get() {
+                    ) {
+                        // When we're loading, show the user what's going on with a loader
+                        (if let FormState::Loading = *form_state.get() {
+                            view! { cx,
+                                // Adapted for Sycamore from the TailwincCSS example at https://tailwindcss.com/docs/animation
+                                svg(class = "animate-spin -ml-1 mr-3 h-5 w-5 text-white", xmlns = "http://www.w3.org/2000/svg", fill = "none", viewBox = "0 0 24 24") {
+                                    circle(class = "opacity-25", cx = "12", cy = "12", r = "10", stroke = "currentColor", stroke-width = "4") {}
+                                    path(class = "opacity-75", fill = "currentColor", d = "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z") {}
+                                }
+                            }
+                        } else {
+                            View::empty()
+                        })
+                        (t!(cx, "interest.submit"))
+                    }
+                    // All successes produce the same message
+                    p(class = "text-emerald-500 mt-5 max-w-sm") { (if let FormState::Success = *form_state.get() {
                         t!(cx, "interest.form.success")
                     } else {
                         String::new()
@@ -86,28 +106,33 @@ fn interest_form_widget<G: Html>(cx: Scope, state: &InterestFormStateRx, _: ()) 
 async fn submit_form<'a>(
     cx: Scope<'a>,
     state: InterestFormState,
-    form_err: &'a Signal<String>,
-    form_success: &'a Signal<bool>,
+    form_state: &'a Signal<FormState>,
 ) {
     use gloo_net::http::Request;
     use regex::Regex;
     use serde_json::Value;
     use uuid::Uuid;
 
-    form_err.set(String::new());
-    form_success.set(false);
+    // No matter what it previously was, we're starting a nedw attempt (this will lead
+    // to a loader being displayed in the button)
+    form_state.set(FormState::Loading);
 
     if state.email.is_empty() {
-        form_err.set("Please provide an email address for us to send updates to!".to_string());
+        form_state.set(FormState::Error(
+            "Please provide an email address for us to send updates to!".to_string(),
+        ));
         return;
     }
 
-    // TODO Now validate the email
+    // Now validate the email
     // See https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
     let email_regex = Regex::new(r#"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"#)
         .unwrap();
     if !email_regex.is_match(&state.email) {
-        form_err.set(t!(cx, "interest.form.error-invalid-email"));
+        form_state.set(FormState::Error(t!(
+            cx,
+            "interest.form.error-invalid-email"
+        )));
         return;
     }
 
@@ -155,25 +180,24 @@ async fn submit_form<'a>(
                         .flatten()
                         .flatten();
                     if id.is_some() {
-                        form_err.set(String::new());
                         // If this has worked, then we don't need to take any further action
                         // (because we don't bother to validate the new email, if they've given someone
                         // else's email address, they can always unsubscribe)
-                        form_success.set(true);
+                        form_state.set(FormState::Success);
                     } else {
-                        form_err.set(t!(cx, "interest.form.error-parsing"))
+                        form_state.set(FormState::Error(t!(cx, "interest.form.error-parsing")))
                     }
                 }
-                Err(_) => form_err.set(t!(cx, "interest.form.error-parsing")),
+                Err(_) => form_state.set(FormState::Error(t!(cx, "interest.form.error-parsing"))),
             };
         }
         // Ok, but HTTP error returned in the status code
         //
         // This might mean we've eclipsed our allowances with Fauna
-        Ok(res) => form_err.set(t!(cx, "interest.form.error-http", {
+        Ok(res) => form_state.set(FormState::Error(t!(cx, "interest.form.error-http", {
             "http_code" = &res.status().to_string()
-        })),
-        Err(_) => form_err.set(t!(cx, "interest.form.error-request")),
+        }))),
+        Err(_) => form_state.set(FormState::Error(t!(cx, "interest.form.error-request"))),
     }
 }
 
@@ -187,6 +211,16 @@ struct InterestFormState {
     dev: bool,
     donation: bool,
     finance: bool,
+}
+
+/// A representation of the current state of the form with respect to its submission. This is not included in
+/// the Perseus state because of the risk of caching a loading state before the logic that would cause a success
+/// executes. If a use were to change the page then, they would return to a still-loading form later.
+enum FormState {
+    Success,
+    Error(String),
+    Loading,
+    Unsubmitted,
 }
 
 #[engine_only_fn]
