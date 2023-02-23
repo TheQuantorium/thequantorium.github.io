@@ -35,5 +35,7 @@ site.subcommands.deploy-prod.cmd = [
     "bonnie site build-tailwind prod",
     "PERSEUS_BASE_PATH=https://quantorium.org perseus deploy -e",
     "PERSEUS_BASE_PATH=https://quantorium.org perseus export-error-page --code 404 --output pkg/404.html",
+    # Without this, the custom domain is constantly reset
+    "echo \"quantorium.org\" > pkg/CNAME"
 ]
 site.subcommands.deploy-prod.desc = "builds the website for production on GitHub Pages and finalizes it at `website/pkg`"
