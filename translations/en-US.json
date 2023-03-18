@@ -34,5 +34,6 @@
   "interest.form.error-request": "Form submission failed, please reload the page and try again.",
   "interest.form.error-http": "Form submission failed with HTTP error code '{ $http_code }'. Please reload the page and try again.",
   "interest.form.error-parsing": "Response from form submission couldn't be parsed, please reload the page and try again.",
-  "interest.form.error-invalid-email": "Please provide a valid email address that we can send updates to."
+  "interest.form.error-invalid-email": "Please provide a valid email address that we can send updates to.",
+  "layout.links.blog": "Blog"
 }

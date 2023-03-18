@@ -36,7 +36,7 @@ main {
     /* The header is positioned 'floating' over the content, so we have to make sure this doesn't go behind the header, or it would be invisible.
      * You may need to adjust this based on screen size, depending on how the header expands.
     */
-    margin-top: 5rem;
+    /* margin-top: 5rem; */
 }
 footer {
     /* Put this in the right place in the grid */

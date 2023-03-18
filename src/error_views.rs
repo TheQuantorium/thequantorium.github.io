@@ -75,7 +75,7 @@ pub fn get_error_views<G: Html>() -> ErrorViews<G> {
                     },
                     match pos {
                         ErrorPosition::Page => view! { cx,
-                            Layout(title = "The Quantorium".to_string(), footer = format!("&copy; {} The Quantorium", COPYRIGHT_YEARS)) {
+                            Layout(title = "The Quantorium".to_string(), footer = format!("&copy; {} The Quantorium", COPYRIGHT_YEARS), i18ned = false) {
                                 div(
                                     class = "flex flex-col justify-center items-center h-[95vh] w-full"
                                 ) {
@@ -105,23 +105,8 @@ pub fn get_error_views<G: Html>() -> ErrorViews<G> {
 }
 
 fn not_found_page<G: Html>(cx: Scope) -> View<G> {
-    #[cfg(target_arch = "wasm32")]
-    {
-        // Attempt to redirect the user to Framesurge if they came for the Perseus website
-        let location = web_sys::window().unwrap().location();
-        let pathname = location.pathname();
-        match pathname {
-            Ok(pathname) if pathname.starts_with("/perseus") => {
-                let redirect = pathname.replace("/perseus", "https://framesurge.sh/perseus");
-                location.set_href(&redirect);
-            }
-            // Anything else is either a weird JS error or a genuine mistake from the user
-            _ => (),
-        };
-    }
-
     view! { cx,
-        Layout(title = "The Quantorium".to_string(), footer = format!("&copy; {} The Quantorium", COPYRIGHT_YEARS)) {
+        Layout(title = "The Quantorium".to_string(), footer = format!("&copy; {} The Quantorium", COPYRIGHT_YEARS), i18ned = false) {
             div(class = "flex flex-col justify-center items-center h-screen") {
                 main(class = "flex flex-col border-2 border-neutral-800 rounded-lg max-w-xl m-4") {
                     h3(class = "text-2xl font-bold w-full pb-4 border-b-2 border-neutral-800 my-4") {
