@@ -1,0 +1,90 @@
+/* Styling to make Markdown text look good in a Tailwindy way */
+.markdown > * + *,
+.markdown li + li,
+.markdown li > p + p {
+    margin-top: 0.5rem;
+}
+.markdown stong,
+.markdown bold {
+    font-weight: 900;
+}
+.markdown a {
+    color: #4f46e5; /* Tailwind's `text-indigo-600` */
+    text-decoration: underline;
+    /* Animate between colors to and from the hover state */
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 100ms;
+}
+.markdown a:hover {
+    color: #6366f1; /* Tailwind's `text-indigo-500` */
+}
+.markdown h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    margin-top: 0.5rem; /* Otherwise the warnings about versions look quite cramped */
+    margin-bottom: 0.5rem; /* This just looks good */
+}
+.markdown h2 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+}
+.markdown h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+.markdown h4 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+.markdown h5 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+.markdown h6 {
+    line-height: 1.25;
+}
+.markdown code:not([class*=language-]) {
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    word-break: break-all;
+}
+@media (prefers-color-scheme: light) {
+    .markdown code:not([class*=language-]) {
+        background-color: #d2d2d2;
+        color: #333333;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    .markdown code:not([class*=language-]) {
+        background-color: #2d2d2d;
+        color: #cccccc;
+    }
+}
+.markdown pre {
+    border-radius: 0.5rem;
+    overflow-x: auto;
+}
+.markdown blockquote {
+    border-left-width: 4px;
+    padding-left: 1rem;
+    font-style: italic;
+}
+.markdown ul {
+    padding-left: 1.25rem;
+    list-style-type: disc;
+    @media (min-width: 640px) {
+        padding-left: 2.5rem;
+    }
+}
+.markdown ol {
+    padding-left: 1.25rem;
+    list-style-type: decimal;
+    @media (min-width: 640px) {
+        padding-left: 2.5rem;
+    }
+}
+.markdown details > :not(summary) {
+    /* Makes dropdown text indented (don't worry, this actually looks quite good on mobile)  */
+    margin-left: 1.5rem;
+}

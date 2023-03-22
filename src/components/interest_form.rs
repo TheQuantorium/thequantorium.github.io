@@ -35,22 +35,22 @@ fn interest_form_widget<G: Html>(cx: Scope, state: &InterestFormStateRx, _: ()) 
                 ) {}
                 p(class = "italic text-zinc-600 dark:text-zinc-400 max-w-md") { (t!(cx, "interest.note")) }
                 p { (t!(cx, "interest.interests-prelude")) }
-                input(type = "checkbox", name = "general", disabled = true, checked = true) {}
+                input(class = "accent-emerald-600", type = "checkbox", name = "general", disabled = true, checked = true) {}
                 label(class = "ml-2", for = "general") { (t!(cx, "interest.general")) }
                 br {}
-                input(bind:checked = state.running_node, type = "checkbox", name = "running_node") {}
+                input(class = "accent-emerald-600", bind:checked = state.running_node, type = "checkbox", name = "running_node") {}
                 label(class = "ml-2", for = "running_node") { (t!(cx, "interest.running_node")) }
                 br {}
-                input(bind:checked = state.app_dev, type = "checkbox", name = "app_dev") {}
+                input(class = "accent-emerald-600", bind:checked = state.app_dev, type = "checkbox", name = "app_dev") {}
                 label(class = "ml-2", for = "app_dev") { (t!(cx, "interest.app_dev")) }
                 br {}
-                input(bind:checked = state.dev, type = "checkbox", name = "dev") {}
+                input(class = "accent-emerald-600", bind:checked = state.dev, type = "checkbox", name = "dev") {}
                 label(class = "ml-2", for = "dev") { (t!(cx, "interest.dev")) }
                 br {}
-                input(bind:checked = state.donation, type = "checkbox", name = "donation") {}
+                input(class = "accent-emerald-600", bind:checked = state.donation, type = "checkbox", name = "donation") {}
                 label(class = "ml-2", for = "donation") { (t!(cx, "interest.donation")) }
                 br {}
-                input(bind:checked = state.finance, type = "checkbox", name = "finance") {}
+                input(class = "accent-emerald-600", bind:checked = state.finance, type = "checkbox", name = "finance") {}
                 label(class = "ml-2", for = "finance") { (t!(cx, "interest.finance")) }
                 br {}
                 // Any errors will be provided through the form state as strings (since they shoudl be human-readable first)

@@ -1,0 +1,11 @@
+.glow {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+.glow::after {
+    content: "";
+    border-radius: 50%;
+    box-shadow: 0 0 200px 200px rgba(17, 212, 59, 0.8);
+}

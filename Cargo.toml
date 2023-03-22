@@ -7,7 +7,8 @@ edition = "2021"
 
 # Dependencies for the engine and the browser go here
 [dependencies]
-perseus = { version = "=0.4.0-beta.17", features = [ "translator-lightweight" ] }
+# TODO Check back on minification
+perseus = { version = "=0.4.0-beta.22", default-features = false, features = [ "live-reload", "hsr", "client-helpers", "macros", "dflt-engine", "cache-initial-load", "translator-lightweight" ] }
 sycamore = "^0.8.1"
 serde = { version = "1", features = [ "derive" ] }
 serde_json = "1"
@@ -18,6 +19,7 @@ fmterr = "0.1"
 [target.'cfg(engine)'.dependencies]
 tokio = { version = "1", features = [ "macros", "rt", "rt-multi-thread" ] }
 pulldown-cmark = "0.8"
+anyhow = "1"
 
 # Browser-only dependencies go here
 [target.'cfg(client)'.dependencies]
@@ -26,3 +28,4 @@ web-sys = { version = "0.3", features = [ "Window" ] }
 gloo-net = { version = "0.2", features = [ "http", "json" ] }
 uuid = { version = "1", features = [ "v4", "js" ] }
 regex = "1"
+wasm-bindgen = "0.2"

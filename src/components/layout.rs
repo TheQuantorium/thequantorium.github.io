@@ -22,18 +22,28 @@ pub fn Layout<'a, G: Html>(
             }
         };
     }
+    macro_rules! linkl {
+        ($cx:ident, $link:literal, $fallback:literal) => {
+            if i18ned {
+                link!($cx, $link)
+            } else {
+                $fallback.to_string()
+            }
+        };
+    }
 
     view! { cx,
         // These elements are styled with bright colors for demonstration purposes
         header(class = "relative flex flex-row-reverse justify-center items-center px-16 py-6 text-emerald-500 text-shadow-lg shadow-emerald-400/75 font-extrabold p-4 backdrop-blur-lg text-center") {
-            p(class = "text-2xl sm:text-4xl w-full absolute underline") { (title.to_string()) }
-            nav(class = "text-[1.3rem] ml-auto mr-[20%]") {
+            a(href = linkl!(cx, "", "en-US"), class = "text-2xl sm:text-4xl w-full absolute underline") { (title.to_string()) }
+            nav(class = "text-[1.3rem] ml-auto mr-[20%] z-50") {
                 ul(class = "flex") {
                     li(class = "mx-12") {
-                        a { (tl!(cx, "layout.links.blog", "Blog")) }
+                        a(href = linkl!(cx, "posts", "en-US/posts")) { (tl!(cx, "layout.links.blog", "Blog")) }
                     }
                 }
             }
+            // TODO Mobile navbar
         }
         main(style = "p-4") {
             (children)

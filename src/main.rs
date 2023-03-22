@@ -2,6 +2,7 @@ mod components;
 mod error_views;
 mod svg;
 mod templates;
+mod post_utils;
 
 static COPYRIGHT_YEARS: &str = "2023";
 
@@ -12,6 +13,8 @@ use sycamore::prelude::*;
 pub fn main<G: Html>() -> PerseusApp<G> {
     PerseusApp::new()
         .template(crate::templates::index::get_template())
+        .template(crate::templates::posts::get_template())
+        .template(crate::templates::post::get_template())
         .capsule_ref(&*crate::components::INTEREST_FORM)
         .locales_and_translations_manager("en-US", &[])
         .index_view(|cx| {
