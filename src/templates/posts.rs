@@ -1,7 +1,7 @@
+use crate::post_utils::{format_date, SlimPost};
 use perseus::prelude::*;
 use serde::{Deserialize, Serialize};
 use sycamore::prelude::*;
-use crate::post_utils::{SlimPost, format_date};
 
 use crate::{
     components::{Layout, INTEREST_FORM},
@@ -25,9 +25,9 @@ fn posts_page<G: Html>(cx: Scope, PostsState { posts }: PostsState) -> View<G> {
                     cx,
                     li {
                         a(href = localized_link, class = "flex flex-col p-8 rounded-lg max-w-xl shadow-lg hover:shadow-xl transition-shadow") {
-                            span(class = "text-xl font-bold text-emerald-600 text-shadow-sm shadow-emerald-400/75") { (post.title) }
-                            span(class = "italic text-neutral-700") { (t!(cx, "post.date", { "date" = &localized_date })) }
-                            span(class = "mt-2") { (post.description) }
+                            span(class = "text-xl font-bold text-emerald-500 text-shadow-sm shadow-emerald-400/75") { (post.title) }
+                            span(class = "italic text-neutral-700 dark:text-neutral-400") { (t!(cx, "post.date", { "date" = &localized_date })) }
+                            span(class = "mt-2 dark:text-white") { (post.description) }
                         }
                     }
                 }
@@ -38,7 +38,7 @@ fn posts_page<G: Html>(cx: Scope, PostsState { posts }: PostsState) -> View<G> {
         Layout(title = t!(cx, "the-quantorium"), footer = t!(cx, "footer.text", { "years" = COPYRIGHT_YEARS }), i18ned = true) {
             div(class = "flex flex-col items-center mx-4 mt-4 md:mt-10 lg:mt-12") {
                 div {
-                    h1(class = "ml-4 text-2xl font-bold text-emerald-600 text-shadow-sm shadow-emerald-400/75") { (t!(cx, "posts.intro")) }
+                    h1(class = "ml-4 text-2xl font-bold text-emerald-500 text-shadow-sm shadow-emerald-400/75") { (t!(cx, "posts.intro")) }
                     ul(class = "mt-4") {
                         (posts_view)
                     }
@@ -56,9 +56,11 @@ fn head(cx: Scope) -> View<SsrNode> {
 }
 
 #[engine_only_fn]
-async fn get_build_state(StateGeneratorInfo { locale, .. }: StateGeneratorInfo<()>) -> Result<PostsState, BlamedError<anyhow::Error>> {
-    use std::fs;
+async fn get_build_state(
+    StateGeneratorInfo { locale, .. }: StateGeneratorInfo<()>,
+) -> Result<PostsState, BlamedError<anyhow::Error>> {
     use crate::post_utils::parse_slim_post;
+    use std::fs;
 
     let mut posts = Vec::new();
 

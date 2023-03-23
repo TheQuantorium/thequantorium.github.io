@@ -34,12 +34,15 @@ pub fn Layout<'a, G: Html>(
 
     view! { cx,
         // These elements are styled with bright colors for demonstration purposes
-        header(class = "relative flex flex-row-reverse justify-center items-center px-16 py-6 text-emerald-500 text-shadow-lg shadow-emerald-400/75 font-extrabold p-4 backdrop-blur-lg text-center") {
-            a(href = linkl!(cx, "", "en-US"), class = "text-2xl sm:text-4xl w-full absolute underline") { (title.to_string()) }
-            nav(class = "text-[1.3rem] ml-auto mr-[20%] z-50") {
+        header(class = "relative flex flex-row justify-evenly items-center px-4 xs:px-8 sm:px-16 py-6 text-emerald-500 font-extrabold text-center") {
+            span(class = "w-8 h-8 bg-black") {
+                // TODO Icon
+            }
+            a(href = linkl!(cx, "", "en-US"), class = "text-2xl sm:text-4xl underline mx-2 text-shadow-lg hover:text-shadow-xl shadow-emerald-400/75 hover:shadow-emerald-500/75 transition-[text-shadow] transition-colors") { (title.to_string()) }
+            nav(class = "text-lg sm:text-[1.3rem]") {
                 ul(class = "flex") {
-                    li(class = "mx-12") {
-                        a(href = linkl!(cx, "posts", "en-US/posts")) { (tl!(cx, "layout.links.blog", "Blog")) }
+                    li {
+                        a(class = "text-shadow-lg hover:text-shadow-xl shadow-emerald-400/75 hover:shadow-emerald-500/75 transition-[text-shadow] transition-colors", href = linkl!(cx, "posts", "en-US/posts")) { (tl!(cx, "layout.links.blog", "Blog")) }
                     }
                 }
             }

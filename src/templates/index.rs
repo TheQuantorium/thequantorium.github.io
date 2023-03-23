@@ -57,7 +57,7 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
                     }
                 }
                 p(
-                    class = "text-lg sm:text-xl font-semibold text-emerald-600 dark:text-emerald-400 mt-8",
+                    class = "text-lg sm:text-xl font-semibold text-emerald-600 dark:text-emerald-400 mt-8 max-w-prose",
                     dangerously_set_inner_html = &t!(cx, "index.summary")
                 ) {}
             }
@@ -91,10 +91,9 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
             div(class = "flex flex-col items-center m-4 sm:mx-8 md:mx-16") {
                 h2(class = "text-4xl text-emerald-600 dark:text-emerald-400 text-shadow-lg shadow-emerald-400/75 mb-4") { (t!(cx, "intro.heading")) }
                 p(
-                    class = "max-w-prose mx-2 text-black dark:text-white md:text-lg",
+                    class = "max-w-prose mx-2 text-black dark:text-white md:text-lg intro-text",
                     dangerously_set_inner_html = &html_intro
                 ) {}
-                (INTEREST_FORM.widget(cx, "", ()))
                 // a(
                 //     class = "my-2 p-4 text-white bg-emerald-500 shadow-lg shadow-emerald-500/50 rounded-lg font-semibold md:text-lg inline-flex items-center transition ease-in-out hover:-translate-y-1 hover:scale-105",
                 //     href = "https://github.com/TheQuantorium/manifesto/tree/main/manifesto.pdf",
@@ -105,6 +104,8 @@ fn index_page<G: Html>(cx: Scope, IntroState { html_intro }: IntroState) -> View
                 //     (t!(cx, "intro.cta"))
                 // }
             }
+
+            (INTEREST_FORM.widget(cx, "", ()))
         }
     }
 }

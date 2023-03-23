@@ -1,6 +1,6 @@
 #[cfg(engine)]
 use pulldown_cmark::{html, Options, Parser};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 #[cfg(engine)]
 use std::fs;
@@ -13,14 +13,30 @@ pub fn parse_slim_post(path: &Path) -> Result<SlimPost, anyhow::Error> {
     let file_contents = fs::read_to_string(path)?;
     let (frontmatter, _) = parse_frontmatter(file_contents, false);
 
-    let date = frontmatter.get("date").expect("no date in post").to_string();
+    let date = frontmatter
+        .get("date")
+        .expect("no date in post")
+        .to_string();
 
     // Create a new slim representation of the post with the parsed frontmatter
     let slim_post = SlimPost {
-        title: frontmatter.get("title").expect("no title in post").to_string(),
+        title: frontmatter
+            .get("title")
+            .expect("no title in post")
+            .to_string(),
         date: parse_date(date),
-        description: frontmatter.get("description").expect("no description in post").to_string(),
-        slug: path.file_name().unwrap().to_string_lossy().to_string().strip_suffix(".md").unwrap().to_string(),
+        description: frontmatter
+            .get("description")
+            .expect("no description in post")
+            .to_string(),
+        slug: path
+            .file_name()
+            .unwrap()
+            .to_string_lossy()
+            .to_string()
+            .strip_suffix(".md")
+            .unwrap()
+            .to_string(),
     };
 
     Ok(slim_post)
@@ -32,14 +48,30 @@ pub fn parse_full_post(path: &Path) -> Result<Post, anyhow::Error> {
     let file_contents = fs::read_to_string(path)?;
     let (frontmatter, contents) = parse_frontmatter(file_contents, true);
 
-    let date = frontmatter.get("date").expect("no date in post").to_string();
+    let date = frontmatter
+        .get("date")
+        .expect("no date in post")
+        .to_string();
 
     // Create a new full representation of the post with the parsed frontmatter
     let slim_post = Post {
-        title: frontmatter.get("title").expect("no title in post").to_string(),
+        title: frontmatter
+            .get("title")
+            .expect("no title in post")
+            .to_string(),
         date: parse_date(date),
-        description: frontmatter.get("description").expect("no description in post").to_string(),
-        slug: path.file_name().unwrap().to_string_lossy().to_string().strip_suffix(".md").unwrap().to_string(),
+        description: frontmatter
+            .get("description")
+            .expect("no description in post")
+            .to_string(),
+        slug: path
+            .file_name()
+            .unwrap()
+            .to_string_lossy()
+            .to_string()
+            .strip_suffix(".md")
+            .unwrap()
+            .to_string(),
         contents,
     };
 
@@ -89,22 +121,19 @@ fn parse_date(date: String) -> (u32, u8, u8) {
     let date_parts = date.split('-').collect::<Vec<_>>();
 
     (
-        date_parts[0]
-            .parse()
-            .expect("invalid year in post"),
-        date_parts[1]
-            .parse()
-            .expect("invalid month in post"),
-        date_parts[2]
-            .parse()
-            .expect("invalid day in post")
+        date_parts[0].parse().expect("invalid year in post"),
+        date_parts[1].parse().expect("invalid month in post"),
+        date_parts[2].parse().expect("invalid day in post"),
     )
 }
 
 /// Parses frontmatter and contents from a Markdown file. If `parse_contents` is `false`,
 /// the contents will not be parsed, and an empty string will be returned instead.
 #[cfg(engine)]
-fn parse_frontmatter(file_contents: String, parse_contents: bool) -> (HashMap<String, String>, String) {
+fn parse_frontmatter(
+    file_contents: String,
+    parse_contents: bool,
+) -> (HashMap<String, String>, String) {
     let mut frontmatter = HashMap::new();
     let mut contents = String::new();
 

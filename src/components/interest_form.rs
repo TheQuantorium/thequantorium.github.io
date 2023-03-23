@@ -25,7 +25,7 @@ fn interest_form_widget<G: Html>(cx: Scope, state: &InterestFormStateRx, _: ()) 
     let form_state = create_signal(cx, FormState::Unsubmitted);
 
     view! { cx,
-        div(class = "text-left my-12 flex flex-col items-center text-black dark:text-white") {
+        div(class = "text-left my-12 flex flex-col items-center text-black dark:text-white mx-2") {
             form(class = "max-w-prose p-8 shadow-md rounded-xl") {
                 h3(class = "text-4xl text-emerald-600 dark:text-emerald-400 text-shadow shadow-emerald-400/75 mb-2") { (t!(cx, "interest.heading")) }
                 input(

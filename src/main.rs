@@ -1,8 +1,8 @@
 mod components;
 mod error_views;
+mod post_utils;
 mod svg;
 mod templates;
-mod post_utils;
 
 static COPYRIGHT_YEARS: &str = "2023";
 

@@ -5,7 +5,8 @@ use sycamore::prelude::*;
 
 use crate::{
     components::{Layout, INTEREST_FORM},
-    COPYRIGHT_YEARS, post_utils::{Post, format_date},
+    post_utils::{format_date, Post},
+    COPYRIGHT_YEARS,
 };
 
 #[derive(Serialize, Deserialize, UnreactiveState, Clone)]
@@ -20,13 +21,14 @@ fn post_page<G: Html>(cx: Scope, PostState { post }: PostState) -> View<G> {
     view! { cx,
         Layout(title = t!(cx, "the-quantorium"), footer = t!(cx, "footer.text", { "years" = COPYRIGHT_YEARS }), i18ned = true) {
             div(class = "flex justify-center mx-2 mt-4 md:mt-10 lg:mt-12") {
-                div(class = "max-w-prose mx-4") {
+                div(class = "max-w-prose mx-4 dark:text-white") {
                     h1(class = "text-2xl md:text-3xl lg:text-4xl font-bold") { (post.title) }
-                    span(class = "italic text-neutral-700") { (t!(cx, "post.date", { "date" = &localized_date })) }
+                    span(class = "italic text-neutral-700 dark:text-neutral-400") { (t!(cx, "post.date", { "date" = &localized_date })) }
                     div(class = "mt-6 markdown", dangerously_set_inner_html = &post.contents) {}
-                    (INTEREST_FORM.widget(cx, "", ()))
                 }
             }
+
+            (INTEREST_FORM.widget(cx, "", ()))
         }
     }
 }
@@ -44,7 +46,9 @@ fn head(cx: Scope, PostState { post }: PostState) -> View<SsrNode> {
 }
 
 #[engine_only_fn]
-async fn get_build_state(StateGeneratorInfo { path, locale, .. }: StateGeneratorInfo<()>) -> Result<PostState, BlamedError<anyhow::Error>> {
+async fn get_build_state(
+    StateGeneratorInfo { path, locale, .. }: StateGeneratorInfo<()>,
+) -> Result<PostState, BlamedError<anyhow::Error>> {
     use crate::post_utils::parse_full_post;
     use std::path::Path;
 
@@ -52,9 +56,7 @@ async fn get_build_state(StateGeneratorInfo { path, locale, .. }: StateGenerator
     let file_path = Path::new(&file_path);
     let post = parse_full_post(file_path)?;
 
-    Ok(PostState {
-        post,
-    })
+    Ok(PostState { post })
 }
 #[engine_only_fn]
 async fn get_build_paths() -> Result<BuildPaths, io::Error> {

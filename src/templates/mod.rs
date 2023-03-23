@@ -1,3 +1,3 @@
 pub mod index;
-pub mod posts;
 pub mod post;
+pub mod posts;

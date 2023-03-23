@@ -37,6 +37,7 @@ module.exports = {
                 sm: "0 0 8px var(--tw-shadow-color)",
                 DEFAULT: "0 0 16px var(--tw-shadow-color)",
                 lg: "0 0 24px var(--tw-shadow-color)",
+                xl: "0 0 32px var(--tw-shadow-color)",
             }
         },
     },
