@@ -11,3 +11,7 @@
 .emoji-emerald:hover {
     text-shadow: 0 0 0 #10b981, 0 0 24px #10b981;
 }
+
+.intro-text p {
+    margin-bottom: 1.25rem;
+}
