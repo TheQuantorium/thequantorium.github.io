@@ -34,5 +34,6 @@ pub fn main<G: Html>() -> PerseusApp<G> {
                 }
             }
         })
+        .static_alias("/favicon.ico", "static/logo.ico")
         .error_views(crate::error_views::get_error_views())
 }
